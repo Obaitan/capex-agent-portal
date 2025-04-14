@@ -165,10 +165,7 @@ export default function SignupPage() {
                   ]}
                   selectedValue=""
                   placeholder="State"
-                  onChange={(value) => {
-                    value === 'lagos' && console.log('Lagos');
-                    // do something
-                  }}
+                  onChange={() => {}}
                 />
                 <Select
                   options={[
@@ -179,10 +176,7 @@ export default function SignupPage() {
                   ]}
                   selectedValue=""
                   placeholder="City"
-                  onChange={(value) => {
-                    value === 'lagos' && console.log('Lagos');
-                    // do something
-                  }}
+                  onChange={() => {}}
                 />
                 <div className="col-span-full mt-2 px-2.5">
                   <p className="text-gray-800 font-medium">Agency Manager</p>

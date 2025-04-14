@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, ReactNode, useTransition } from 'react';
+import { ReactNode } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -45,15 +45,23 @@ export const NavLink = ({ href, icon, children, className }: NavLinkProps) => {
 };
 
 export const SidebarComponent = () => {
-  const [open, setOpen] = useState(0);
-  const [isPending, startTransition] = useTransition();
   const isLoggedIn = true; // Replace with actual authentication logic
   const accountName = 'John Doe'; // Replace with actual user data
   const email = 'morayo.sanni@gmail.com';
+  const isPending = false; // Replace with actual loading state
 
-  const handleLogout = async () => {
-    /// Simulate a login process
-  };
+  async function handleLogout(event: React.MouseEvent<HTMLAnchorElement, MouseEvent>): Promise<void> {
+    event.preventDefault();
+    try {
+      // Simulate a logout process or call an API to log out
+      console.log('Logging out...');
+      // Example: await api.logout();
+      window.location.href = '/auth/signin'; // Redirect to sign-in page after logout
+    } catch (error) {
+      console.error('Error during logout:', error);
+    }
+  }
+ 
 
   return (
     <div className="fixed z-50 bottom-0 top-0 left-0 w-[245px] h-screen p-5 shadow-md bg-[linear-gradient(to_bottom,rgba(256,256,256,1),rgba(216,66,72,0.59),rgba(216,66,72,0.75),rgba(216,66,72,0.88),rgba(216,66,72,0.95)),url('/capex-images/sidebar-image.jpeg')] bg-cover bg-center flex flex-col overflow-y-auto">
