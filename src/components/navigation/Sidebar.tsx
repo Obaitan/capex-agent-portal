@@ -130,7 +130,7 @@ export const SidebarComponent = () => {
           )}
         </Link>
         {isLoggedIn && (
-          <div className="p-2 mt-3 text-[#bbb]">
+          <div className="p-2 mt-3 text-[#fff]">
             <div className="flex items-center gap-2 mb-1">
               <UserIcon className="h-3.5 w-4" />
               <p>{accountName}</p>

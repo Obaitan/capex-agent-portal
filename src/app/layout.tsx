@@ -3,8 +3,8 @@ import './globals.css';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Roboto } from 'next/font/google';
-import { TopLinksComponent } from '@/components/navigation/toplinks.component';
-import { NavComponent } from '@/components/navigation/nav.component';
+import { TopLinksComponent } from '@/components/navigation/TopLinks';
+import { NavComponent } from '@/components/navigation/Nav';
 import { Suspense } from 'react';
 import { Loader2 } from 'lucide-react';
 
@@ -27,14 +27,14 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${roboto.variable} font-sans`}>
         <ToastContainer />
-        <div className="bg-background">
+        <div className="bg-background min-h-screen">
           <TopLinksComponent />
           <NavComponent />
-          <div className="flex-grow px-7 pt-14 pb-[108px] md:pt-20 md:px-12 xl:px-9 2xl:px-14 ml-0 xl:ml-[245px] bg-background min-h-screen">
+          <div className="flex-grow px-7 pt-14 pb-[108px] md:pt-20 md:px-12 xl:px-9 2xl:px-14 ml-0 xl:ml-[245px]">
             <Suspense
               fallback={
                 <div className="flex items-center justify-center h-full">
-                  <Loader2 className="animate-spin w-8 h-8 text-secondary-200" />
+                  <Loader2 className="animate-spin w-8 h-8 text-blue-600" />
                 </div>
               }
             >

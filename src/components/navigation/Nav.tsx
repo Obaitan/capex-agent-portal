@@ -1,7 +1,7 @@
 'use client';
 
-import { SidebarComponent } from './sidebar.component';
-import { MobileSidebarComponent } from './mobile.sidebar.component';
+import { SidebarComponent } from './Sidebar';
+import { MobileSidebarComponent } from './MobileSidebar';
 import { useScreenSize } from '@/hooks/useScreenSize';
 
 export const NavComponent = () => {

@@ -37,13 +37,13 @@ export default function SignupPage() {
   return (
     <>
       <div className="flex justify-center items-center w-full h-full">
-        <div className="flex flex-col items-center gap-9 w-full">
+        <div className="flex flex-col items-center gap-9">
           <p className="font-semibold text-3xl text-primary">Sign Up</p>
           <form
             onSubmit={onSubmit}
             className="flex flex-col items-center gap-8 w-full"
           >
-            <div className="flex flex-col items-center gap-[18px] w-full md:w-[600px] text-[15px]">
+            <div className="flex flex-col items-center gap-[18px] w-full md:w-[550px] text-[15px]">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-4 md:gap-y-[18px] w-full">
                 <div className="flex flex-col gap-1 w-full">
                   <input
@@ -205,7 +205,7 @@ export default function SignupPage() {
 
               <GenericButton
                 type="submit"
-                className="bg-[#02364B] mt-8 !w-full"
+                className="bg-[#02364B] mt-6 !w-full cursor-pointer"
               >
                 {isPending ? (
                   <div className="flex justify-center items-center">
@@ -215,7 +215,7 @@ export default function SignupPage() {
                   'Create Account'
                 )}
               </GenericButton>
-              <p className="text-gray-700 text-base font-normal mt-1">
+              <p className="text-gray-700 text-base font-normal">
                 Already have an account?
                 <Link href={'/auth/signin'}>
                   <span className="text-blue-900 font-medium ml-2 hover:underline-offset-1 hover:underline">
