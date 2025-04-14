@@ -34,10 +34,6 @@ export default function SignupPage() {
     });
   });
 
-  const millisecondsInEighteenYears = 1000 * 60 * 60 * 24 * 365.25 * 18; // (considering leap years)
-  const Timestamp18YearsAgo =
-    new Date().getTime() - millisecondsInEighteenYears;
-
   return (
     <>
       <div className="flex justify-center items-center w-full h-full">
@@ -170,6 +166,7 @@ export default function SignupPage() {
                   selectedValue=""
                   placeholder="State"
                   onChange={(value) => {
+                    value === 'lagos' && console.log('Lagos');
                     // do something
                   }}
                 />
@@ -183,6 +180,7 @@ export default function SignupPage() {
                   selectedValue=""
                   placeholder="City"
                   onChange={(value) => {
+                    value === 'lagos' && console.log('Lagos');
                     // do something
                   }}
                 />

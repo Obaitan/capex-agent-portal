@@ -1,11 +1,9 @@
 'use client';
 
 import { useState, useTransition } from 'react';
-import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 import OTPVerificationComponent from '@/components/auth/OtpVerification';
 import { SignupData } from '@/types';
-import { revalidatePath } from 'next/cache';
 
 interface SignupOTPverificationComponentProps {
   formData: SignupData;
@@ -13,12 +11,11 @@ interface SignupOTPverificationComponentProps {
 
 const SignupOTPverificationComponent: React.FC<
   SignupOTPverificationComponentProps
-> = ({ formData }) => {
+> = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [isPending, startTransition] = useTransition();
-  const router = useRouter();
 
-  const handleOTPVerification = async (otp: string): Promise<void> => {
+  const handleOTPVerification = async (): Promise<void> => {
     setLoading(true);
     startTransition(async () => {
       // do something with the OTP
