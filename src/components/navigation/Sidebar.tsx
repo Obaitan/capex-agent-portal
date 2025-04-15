@@ -45,7 +45,7 @@ export const NavLink = ({ href, icon, children, className }: NavLinkProps) => {
 };
 
 export const SidebarComponent = () => {
-  const isLoggedIn = false; // Replace with actual authentication logic
+  const isLoggedIn = true; // Replace with actual authentication logic
   const accountName = 'John Doe'; // Replace with actual user data
   const email = 'morayo.sanni@gmail.com';
   const isPending = false; // Replace with actual loading state
