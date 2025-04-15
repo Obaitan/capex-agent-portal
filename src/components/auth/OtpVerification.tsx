@@ -5,6 +5,7 @@ import OtpInput from 'react-otp-input';
 import { toast } from 'react-toastify';
 import { Loader2 } from 'lucide-react';
 import { GenericButton } from '../general/Button';
+import Link from 'next/link';
 
 interface OTPVerificationProps {
   onSubmit: (otp: string) => Promise<void>;
@@ -39,9 +40,9 @@ const OTPVerificationComponent: React.FC<OTPVerificationProps> = ({
   };
 
   return (
-    <div className="h-full grid grid-cols-1 place-content-center text-center">
+    <div className="h-full grid grid-cols-1 place-content-center text-center px-7">
       <div className="mb-8">
-        <p className="font-semibold text-3xl text-primary">
+        <p className="font-semibold text-2xl md:text-3xl text-primary">
           {verificationTitle}
         </p>
       </div>
@@ -52,31 +53,33 @@ const OTPVerificationComponent: React.FC<OTPVerificationProps> = ({
         numInputs={otpLength}
         renderInput={(props) => <input {...props} />}
         containerStyle="flex justify-center items-center gap-2 md:gap-4 w-full mb-8"
-        inputStyle="!w-[45px] md:!w-[72px] h-[40px] md:h-[60px] text-lg md:text-2xl font-medium text-text-dark border-[1px] border-[#D9D9D9] rounded-[8px] focus:outline-none focus:border-primary"
+        inputStyle="!w-11 md:!w-[64px] h-12 md:!h-[56px] text-xl md:text-3xl font-medium text-text-dark border-[1px] border-gray-300 rounded-[8px] focus:outline-none focus:border-2 focus:border-blue-900"
       />
 
       <div className="w-full md:w-[450px] mx-auto md:mt-3 mb-5">
-        <GenericButton
-          className="bg-secondary mx-auto !w-full cursor-pointer disabled:bg-disabled"
-          disabled={!isOTPComplete || loading || isPending}
-          onClick={handleVerification}
-        >
-          {isPending || loading ? (
-            <div className="flex justify-center items-center gap-2">
-              <Loader2 className="w-6 h-6" />
-              <p>Verifying</p>
-            </div>
-          ) : (
-            submitButtonText
-          )}
-        </GenericButton>
+        <Link href={'/dashboard'}>
+          <GenericButton
+            className="bg-[#02364B] mx-auto !w-full cursor-pointer disabled:bg-[#ccc] disabled:cursor-not-allowed"
+            disabled={!isOTPComplete || loading || isPending}
+            onClick={handleVerification}
+          >
+            {isPending || loading ? (
+              <div className="flex justify-center items-center gap-2">
+                <Loader2 className="w-6 h-6" />
+                <p>Verifying</p>
+              </div>
+            ) : (
+              submitButtonText
+            )}
+          </GenericButton>
+        </Link>
       </div>
 
       {resendOTP && (
-        <p className="text-text-mid">
+        <p className="text-gray-700 text-base font-normal">
           Didn&apos;t receive OTP code?
           <span
-            className="font-medium text-primary cursor-pointer ml-2 text-[17px]"
+            className="text-blue-900 font-medium ml-2 hover:underline-offset-1 hover:underline"
             onClick={resendOTP}
           >
             {resendText}

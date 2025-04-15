@@ -9,9 +9,9 @@ interface SignupOTPverificationComponentProps {
   formData: SignupData;
 }
 
-const SignupOTPverificationComponent: React.FC<
-  SignupOTPverificationComponentProps
-> = () => {
+const SignupOTPverificationPage = ({
+  formData,
+}: SignupOTPverificationComponentProps) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [isPending, startTransition] = useTransition();
 
@@ -41,4 +41,4 @@ const SignupOTPverificationComponent: React.FC<
   );
 };
 
-export default SignupOTPverificationComponent;
+export default SignupOTPverificationPage;

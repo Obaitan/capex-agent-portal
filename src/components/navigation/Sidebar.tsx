@@ -45,12 +45,14 @@ export const NavLink = ({ href, icon, children, className }: NavLinkProps) => {
 };
 
 export const SidebarComponent = () => {
-  const isLoggedIn = true; // Replace with actual authentication logic
+  const isLoggedIn = false; // Replace with actual authentication logic
   const accountName = 'John Doe'; // Replace with actual user data
   const email = 'morayo.sanni@gmail.com';
   const isPending = false; // Replace with actual loading state
 
-  async function handleLogout(event: React.MouseEvent<HTMLAnchorElement, MouseEvent>): Promise<void> {
+  async function handleLogout(
+    event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
+  ): Promise<void> {
     event.preventDefault();
     try {
       // Simulate a logout process or call an API to log out
@@ -61,7 +63,6 @@ export const SidebarComponent = () => {
       console.error('Error during logout:', error);
     }
   }
- 
 
   return (
     <div className="fixed z-50 bottom-0 top-0 left-0 w-[245px] h-screen p-5 shadow-md bg-[linear-gradient(to_bottom,rgba(256,256,256,1),rgba(216,66,72,0.59),rgba(216,66,72,0.75),rgba(216,66,72,0.88),rgba(216,66,72,0.95)),url('/capex-images/sidebar-image.jpeg')] bg-cover bg-center flex flex-col overflow-y-auto">
@@ -74,46 +75,48 @@ export const SidebarComponent = () => {
         />
       </div>
 
-      <div className="mt-9 space-y-1 flex-grow">
-        <NavLink
-          href={'/dashboard'}
-          icon={<ChartBarIcon className="h-[18px] w-[18px]" />}
-        >
-          Dashboard
-        </NavLink>
-        <NavLink
-          href={'/clients'}
-          icon={<UserGroupIcon className="h-[18px] w-[18px]" />}
-        >
-          Clients
-        </NavLink>
-        <NavLink
-          href={'/policies'}
-          icon={<DocumentDuplicateIcon className="h-[18px] w-[18px]" />}
-        >
-          Policies
-        </NavLink>
-        <NavLink
-          href={'/quotes'}
-          icon={<ClipboardDocumentListIcon className="h-[18px] w-[18px]" />}
-        >
-          Quotes
-        </NavLink>
-        <NavLink
-          href={'/commissions'}
-          icon={<CreditCardIcon className="h-[18px] w-[18px]" />}
-        >
-          Commissions
-        </NavLink>
-        <NavLink
-          href={'/settings'}
-          icon={<Cog6ToothIcon className="h-[18px] w-[18px]" />}
-        >
-          Settings
-        </NavLink>
-      </div>
+      {isLoggedIn && (
+        <div className="mt-9 space-y-1 flex-grow">
+          <NavLink
+            href={'/dashboard'}
+            icon={<ChartBarIcon className="h-[18px] w-[18px]" />}
+          >
+            Dashboard
+          </NavLink>
+          <NavLink
+            href={'/clients'}
+            icon={<UserGroupIcon className="h-[18px] w-[18px]" />}
+          >
+            Clients
+          </NavLink>
+          <NavLink
+            href={'/policies'}
+            icon={<DocumentDuplicateIcon className="h-[18px] w-[18px]" />}
+          >
+            Policies
+          </NavLink>
+          <NavLink
+            href={'/quotes'}
+            icon={<ClipboardDocumentListIcon className="h-[18px] w-[18px]" />}
+          >
+            Quotes
+          </NavLink>
+          <NavLink
+            href={'/commissions'}
+            icon={<CreditCardIcon className="h-[18px] w-[18px]" />}
+          >
+            Commissions
+          </NavLink>
+          <NavLink
+            href={'/settings'}
+            icon={<Cog6ToothIcon className="h-[18px] w-[18px]" />}
+          >
+            Settings
+          </NavLink>
+        </div>
+      )}
 
-      <div className="py-2 my-4 text-sm">
+      <div className="py-2 mb-8 mt-auto text-sm">
         <Link
           href={isLoggedIn ? '#' : '/auth/signin'}
           onClick={handleLogout}

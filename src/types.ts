@@ -8,6 +8,14 @@ export type SignupData = {
   address: string;
 };
 
+export type AgentData = {
+  agentCode: string;
+  agentName: string;
+  officeAddress: string;
+  phoneNo: string;
+  email: string;
+};
+
 interface Option {
   value: string;
   label: string;
