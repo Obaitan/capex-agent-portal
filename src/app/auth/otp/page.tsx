@@ -3,15 +3,8 @@
 import { useState, useTransition } from 'react';
 import { toast } from 'react-toastify';
 import OTPVerificationComponent from '@/components/auth/OtpVerification';
-import { SignupData } from '@/types';
 
-interface SignupOTPverificationComponentProps {
-  formData: SignupData;
-}
-
-const SignupOTPverificationPage: React.FC<
-  SignupOTPverificationComponentProps
-> = () => {
+const SignupOTPverificationPage = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [isPending, startTransition] = useTransition();
 
