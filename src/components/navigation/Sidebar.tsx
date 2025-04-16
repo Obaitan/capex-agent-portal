@@ -10,12 +10,13 @@ import {
   DocumentDuplicateIcon,
   UserGroupIcon,
   CreditCardIcon,
-  UserIcon,
+  UserCircleIcon,
   ArrowRightEndOnRectangleIcon,
   ArrowLeftEndOnRectangleIcon,
   ClipboardDocumentListIcon,
 } from '@heroicons/react/24/solid';
 import { Loader2 } from 'lucide-react';
+import { userData } from '@/lib/dummyData';
 
 interface NavLinkProps {
   href: string;
@@ -46,8 +47,6 @@ export const NavLink = ({ href, icon, children, className }: NavLinkProps) => {
 
 export const SidebarComponent = () => {
   const isLoggedIn = true; // Replace with actual authentication logic
-  const accountName = 'John Doe'; // Replace with actual user data
-  const email = 'morayo.sanni@gmail.com';
   const isPending = false; // Replace with actual loading state
 
   async function handleLogout(
@@ -66,7 +65,7 @@ export const SidebarComponent = () => {
 
   return (
     <div className="fixed z-50 bottom-0 top-0 left-0 w-[245px] h-screen p-5 shadow-md bg-[linear-gradient(to_bottom,rgba(256,256,256,1),rgba(216,66,72,0.59),rgba(216,66,72,0.75),rgba(216,66,72,0.88),rgba(216,66,72,0.95)),url('/capex-images/sidebar-image.jpeg')] bg-cover bg-center flex flex-col overflow-y-auto">
-      <div className="mt-2 flex justify-center">
+      <div className="flex justify-center">
         <Image
           src="/capex-images/logo.png"
           width={210}
@@ -135,10 +134,12 @@ export const SidebarComponent = () => {
         {isLoggedIn && (
           <div className="p-2 mt-3 text-[#fff]">
             <div className="flex items-center gap-2 mb-1">
-              <UserIcon className="h-3.5 w-4" />
-              <p>{accountName}</p>
+              <UserCircleIcon className="h-5 w-5" />
+              <p>
+                {userData?.firstName} {userData?.lastName}
+              </p>
             </div>
-            <p className="text-xs">{email}</p>
+            <p className="text-xs">{userData?.email}</p>
           </div>
         )}
       </div>

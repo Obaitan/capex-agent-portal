@@ -32,6 +32,17 @@ export interface SelectProps {
   disabled?: boolean;
 }
 
+export interface RecentCustomers {
+  profilePix?: string;
+  firstName: string;
+  lastName: string;
+  customerID: string;
+  amount?: number;
+  repayment?: number;
+  repaymentChannel?: string;
+  signUpTime: string;
+}
+
 export type fetchQuotesForm = {
   email: string;
   phoneNumber: string;

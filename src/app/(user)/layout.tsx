@@ -1,9 +1,11 @@
 import { Suspense } from 'react';
 import { Loader2 } from 'lucide-react';
+import HeaderComponent from '@/components/navigation/Header';
 
 const AppLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="px-6 pt-14 md:py-20 md:px-12 xl:px-9 2xl:px-14 h-full">
+    <div className="relative px-6 pt-[84px] md:pb-16 md:px-10 h-full bg-[#f8f8f9]">
+      <HeaderComponent/>
       <Suspense
         fallback={
           <div className="flex items-center justify-center h-full">
