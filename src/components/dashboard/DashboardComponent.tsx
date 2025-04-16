@@ -2,12 +2,7 @@
 
 import BarChartComponent from './BarChart';
 import PieChartComponent from './PieChart';
-import NewCustomers from './NewCustomers';
-import Link from 'next/link';
 import {
-  ArrowDownIcon,
-  ArrowUpDownIcon,
-  ArrowUpIcon,
   FileText,
   Users,
   ReceiptText,
