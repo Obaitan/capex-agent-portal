@@ -3,7 +3,6 @@ import './globals.css';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Roboto } from 'next/font/google';
-import { TopLinksComponent } from '@/components/navigation/TopLinks';
 import { NavComponent } from '@/components/navigation/Nav';
 
 const roboto = Roboto({
@@ -25,7 +24,6 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${roboto.variable}`}>
         <ToastContainer />
-        <TopLinksComponent />
         <NavComponent />
         <div className="ml-0 xl:ml-[245px] flex-grow overflow-y-auto h-screen">
           {children}

@@ -9,11 +9,13 @@ import {
   ChartBarIcon,
   DocumentDuplicateIcon,
   UserGroupIcon,
-  CreditCardIcon,
   UserCircleIcon,
   ArrowRightEndOnRectangleIcon,
   ArrowLeftEndOnRectangleIcon,
   ClipboardDocumentListIcon,
+  BuildingOffice2Icon,
+  BanknotesIcon,
+  ClipboardDocumentCheckIcon,
 } from '@heroicons/react/24/solid';
 import { Loader2 } from 'lucide-react';
 import { userData } from '@/lib/dummyData';
@@ -35,8 +37,8 @@ export const NavLink = ({ href, icon, children, className }: NavLinkProps) => {
       href={href}
       className={`flex items-center gap-3 px-5 py-3 text-sm hover:bg-[#eeeeee97] hover:text-primary rounded-full ${className} ${
         hrefPath === pathnamePath
-          ? 'font-semibold text-primary bg-[#eeeeee97]'
-          : 'font-normal text-[#ddd] bg-transparent'
+          ? 'font-semibold text-primary bg-[#eeeeeea1]'
+          : 'font-normal text-[#f3f3f3] bg-[#eeeeee26] border border-[#eeeeee3f]'
       }`}
     >
       {icon}
@@ -64,7 +66,7 @@ export const SidebarComponent = () => {
   }
 
   return (
-    <div className="fixed z-50 bottom-0 top-0 left-0 w-[245px] h-screen p-5 shadow-md bg-[linear-gradient(to_bottom,rgba(256,256,256,1),rgba(216,66,72,0.59),rgba(216,66,72,0.75),rgba(216,66,72,0.88),rgba(216,66,72,0.95)),url('/capex-images/sidebar-image.jpeg')] bg-cover bg-center flex flex-col overflow-y-auto">
+    <div className="fixed z-50 bottom-0 top-0 left-0 w-[245px] h-screen p-5 shadow-md bg-[linear-gradient(to_bottom,rgba(256,256,256,0.85),rgba(216,66,72,0.65),rgba(216,66,72,0.75),rgba(216,66,72,0.88),rgba(216,66,72,0.95)),url('/capex-images/sidebar-image.jpeg')] bg-cover bg-center flex flex-col overflow-y-auto">
       <div className="flex justify-center">
         <Image
           src="/capex-images/logo.png"
@@ -101,10 +103,22 @@ export const SidebarComponent = () => {
             Quotes
           </NavLink>
           <NavLink
+            href={'/claims'}
+            icon={<ClipboardDocumentCheckIcon className="h-[18px] w-[18px]" />}
+          >
+            Claims
+          </NavLink>
+          <NavLink
             href={'/commissions'}
-            icon={<CreditCardIcon className="h-[18px] w-[18px]" />}
+            icon={<BanknotesIcon className="h-[18px] w-[18px]" />}
           >
             Commissions
+          </NavLink>
+          <NavLink
+            href={'/agency'}
+            icon={<BuildingOffice2Icon className="h-[18px] w-[18px]" />}
+          >
+            Agency
           </NavLink>
           <NavLink
             href={'/settings'}

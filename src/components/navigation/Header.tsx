@@ -2,9 +2,10 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { Bars3CenterLeftIcon } from '@heroicons/react/24/solid';
+import { Bars3CenterLeftIcon, DocumentPlusIcon } from '@heroicons/react/24/solid';
 import { userData } from '@/lib/dummyData';
 import { getUserInitials } from '@/lib/functions';
+import Tooltip from '../general/Tooltip';
 
 const HeaderComponent = () => {
   const newMessages = 2;
@@ -24,20 +25,34 @@ const HeaderComponent = () => {
         </p>
 
         <div className="flex items-center gap-3 md:gap-4 lg:gap-5 xl:gap-4">
-          <button className="bg-[#f2f2f2] w-9 h-9 rounded-full border border-gray-50 flex justify-center items-center hover:bg-primary-50 relative cursor-pointer">
-            <Image
-              src="/shapes/notification.svg"
-              alt={newMessages ? 'New notifications' : 'No new notifications'}
-              width={24}
-              height={24}
-              priority
-            />
-            {newMessages > 0 && (
-              <span className="absolute -top-0.5 right-0 bg-red-600 text-white text-[9px] font-medium w-4 h-4 rounded-full flex justify-center items-center">
-                {newMessages}
-              </span>
-            )}
-          </button>
+          <div className="flex gap-2">
+            <Tooltip content="Create Quote" position="bottom">
+              <Link
+                href="/quotes/create"
+                className="bg-[#f2f2f2] w-9 h-9 rounded-full border border-gray-50 flex justify-center items-center hover:bg-primary-50 cursor-pointer"
+              >
+                <DocumentPlusIcon className="h-5 w-5 text-secondary/90" />
+              </Link>
+            </Tooltip>
+            <Tooltip content="Notifications" position="bottom">
+              <button className="bg-[#f2f2f2] w-9 h-9 rounded-full border border-gray-50 flex justify-center items-center hover:bg-primary-50 relative cursor-pointer">
+                <Image
+                  src="/shapes/notification.svg"
+                  alt={
+                    newMessages ? 'New notifications' : 'No new notifications'
+                  }
+                  width={24}
+                  height={24}
+                  priority
+                />
+                {newMessages > 0 && (
+                  <span className="absolute -top-0.5 right-0 bg-red-600 text-white text-[9px] font-medium w-4 h-4 rounded-full flex justify-center items-center">
+                    {newMessages}
+                  </span>
+                )}
+              </button>
+            </Tooltip>
+          </div>
 
           <Link href="/settings" className="flex items-center gap-2.5">
             {userData?.profilePicture ? (
@@ -58,7 +73,7 @@ const HeaderComponent = () => {
           </Link>
 
           <button className="xl:hidden">
-            <Bars3CenterLeftIcon className="h-8 w-8 text-gray-900" />
+            <Bars3CenterLeftIcon className="h-7 w-7 text-gray-900" />
           </button>
         </div>
       </div>
