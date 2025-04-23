@@ -34,7 +34,7 @@ const StatCard = ({
 const DashboardComponent = () => {
   return (
     <>
-      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4 mt-2">
+      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-3 mt-2">
         <StatCard
           icon={<ClipboardDocumentListIcon className="text-blue-600 h-5 w-5" />}
           label="Policies"
@@ -68,7 +68,7 @@ const DashboardComponent = () => {
         />
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-10 bg-white shadow-sm rounded px-6 pt-5 pb-4 mt-5 hover:shadow-md transition-all duration-500">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-10 bg-white shadow-sm rounded px-6 pt-5 pb-4 mt-4 hover:shadow-md transition-all duration-500">
         <div className="lg:pl-10 lg:border-r lg:border-r-gray-200">
           <PieChartComponent />
         </div>
@@ -76,7 +76,7 @@ const DashboardComponent = () => {
           <BarChartComponent />
         </div>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-10 bg-white shadow-sm rounded px-6 pt-5 pb-4 mt-5 hover:shadow-md transition-all duration-500"></div>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-10 bg-white shadow-sm rounded px-6 pt-5 pb-4 mt-4 hover:shadow-md transition-all duration-500"></div>
     </>
   );
 };

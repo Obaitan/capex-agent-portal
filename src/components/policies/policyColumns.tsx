@@ -16,14 +16,13 @@ import { formatDate } from '@/lib/functions';
 export const columns: ColumnDef<{
   id: number;
   policyNumber: string;
-  policyName: string;
+  productName: string;
   firstName: string;
   lastName: string;
-  phone: string;
-  premium: number;
-  duration: number;
-  startDate: string;
-  endDate: string;
+  monthlyPremium: number;
+  totalPremium: number;
+  sumAssured: number;
+  term: number;
   status: 'active' | 'inactive';
 }>[] = [
   {
@@ -53,13 +52,13 @@ export const columns: ColumnDef<{
     header: 'Policy Number',
   },
   {
-    accessorKey: 'policyName',
-    header: 'Policy Name',
+    accessorKey: 'productName',
+    header: 'Product Name',
   },
   {
     accessorKey: 'firstName',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Name" />
+      <DataTableColumnHeader column={column} title="Policy Holder" />
     ),
     cell: ({ row }) => (
       <span>
@@ -68,33 +67,29 @@ export const columns: ColumnDef<{
     ),
   },
   {
-    accessorKey: 'phone',
-    header: 'Phone',
-  },
-  {
-    accessorKey: 'premium',
-    header: 'Premium (₦)',
+    accessorKey: 'monthlyPremium',
+    header: 'Monthly Premium (₦)',
     cell: ({ row }) => {
-      return <span>{row.original.premium.toLocaleString('en-NG')}</span>;
+      return <span>{row.original.monthlyPremium.toLocaleString('en-NG')}</span>;
     },
   },
   {
-    accessorKey: 'duration',
-    header: 'Duration (Years)',
-  },
-  {
-    accessorKey: 'startDate',
-    header: 'Start Date',
+    accessorKey: 'TotalPremium',
+    header: 'Total Premium (₦)',
     cell: ({ row }) => {
-      return <span>{formatDate(row.original.startDate)}</span>;
+      return <span>{row.original.totalPremium.toLocaleString('en-NG')}</span>;
     },
   },
   {
-    accessorKey: 'endDate',
-    header: 'End Date',
+    accessorKey: 'sumAssured',
+    header: 'Sum Assured (₦)',
     cell: ({ row }) => {
-      return <span>{formatDate(row.original.endDate)}</span>;
+      return <span>{row.original.sumAssured.toLocaleString('en-NG')}</span>;
     },
+  },
+  {
+    accessorKey: 'term',
+    header: 'Policy Term (Years)',
   },
   {
     accessorKey: 'status',

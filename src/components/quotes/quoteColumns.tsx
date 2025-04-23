@@ -16,12 +16,13 @@ import { formatDate } from '@/lib/functions';
 export const columns: ColumnDef<{
   id: number;
   quoteNumber: string;
-  policyName: string;
+  productName: string;
   firstName: string;
   lastName: string;
   phone: string;
-  premium: number;
-  duration: number;
+  monthlyPremium: number;
+  sumAssured: number;
+  term: number;
 }>[] = [
   {
     id: 'select',
@@ -50,13 +51,13 @@ export const columns: ColumnDef<{
     header: 'Quote Number',
   },
   {
-    accessorKey: 'policyName',
-    header: 'Policy Name',
+    accessorKey: 'productName',
+    header: 'Product Name',
   },
   {
     accessorKey: 'firstName',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Name" />
+      <DataTableColumnHeader column={column} title="Prospect's Name" />
     ),
     cell: ({ row }) => (
       <span>
@@ -69,15 +70,15 @@ export const columns: ColumnDef<{
     header: 'Phone',
   },
   {
-    accessorKey: 'premium',
-    header: 'Premium (₦)',
+    accessorKey: 'monthlyPremium',
+    header: 'Monthly Premium (₦)',
     cell: ({ row }) => {
-      return <span>{row.original.premium.toLocaleString('en-NG')}</span>;
+      return <span>{row.original.monthlyPremium.toLocaleString('en-NG')}</span>;
     },
   },
   {
-    accessorKey: 'duration',
-    header: 'Duration (Years)',
+    accessorKey: 'term',
+    header: 'Policy Term (Years)',
   },
 
   {

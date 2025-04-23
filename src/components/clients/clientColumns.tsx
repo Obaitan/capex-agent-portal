@@ -21,7 +21,6 @@ export const columns: ColumnDef<{
   email: string;
   numberOfPolicies: number;
   dateOnboarded: string;
-  status: 'active' | 'inactive';
 }>[] = [
   {
     id: 'select',
@@ -77,23 +76,6 @@ export const columns: ColumnDef<{
     header: 'Date Onboarded',
     cell: ({ row }) => {
       return <span>{formatDate(row.original.dateOnboarded)}</span>;
-    },
-  },
-  {
-    accessorKey: 'status',
-    header: 'Status',
-    cell: ({ row }) => {
-      return (
-        <span
-          className={`px-2 py-1 rounded-full text-xs capitalize ${
-            row.original?.status?.toLocaleLowerCase() === 'active'
-              ? 'bg-green-100 text-green-800'
-              : 'bg-gray-100 text-gray-500'
-          }`}
-        >
-          {row.original.status}
-        </span>
-      );
     },
   },
   {

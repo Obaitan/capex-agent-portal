@@ -11,42 +11,46 @@ export default function QuotesPage() {
   const data: {
     id: number;
     quoteNumber: string;
-    policyName: string;
+    productName: string;
     firstName: string;
     lastName: string;
     phone: string;
-    premium: number;
-    duration: number;
+    monthlyPremium: number;
+    sumAssured: number;
+    term: number;
   }[] = [
     {
       id: 1,
       quoteNumber: 'POL123456',
-      policyName: 'Target Savings Plan',
+      productName: 'Target Savings Plan',
       firstName: 'John',
       lastName: 'Doe',
       phone: '0803 456 7890',
-      premium: 12000,
-      duration: 4,
+      monthlyPremium: 12000,
+      sumAssured: 200000,
+      term: 5,
     },
     {
       id: 2,
       quoteNumber: 'POL122345',
-      policyName: 'Capex Savers Plan',
+      productName: 'Capex Savers Plan',
       firstName: 'Samuel',
       lastName: 'Jackson',
       phone: '0805 426 3256',
-      premium: 15000,
-      duration: 3,
+      monthlyPremium: 15000,
+      sumAssured: 300000,
+      term: 4,
     },
     {
       id: 3,
       quoteNumber: 'POL132254',
-      policyName: 'Children Education Plan',
+      productName: 'Children Education Plan',
       firstName: 'Mary',
       lastName: 'Poppins',
       phone: '0802 123 4567',
-      premium: 20000,
-      duration: 5,
+      monthlyPremium: 20000,
+      sumAssured: 500000,
+      term: 10,
     },
   ];
 

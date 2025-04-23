@@ -10,53 +10,49 @@ export default function PoliciesPage() {
   const data: {
     id: number;
     policyNumber: string;
-    policyName: string;
+    productName: string;
     firstName: string;
     lastName: string;
-    phone: string;
-    premium: number;
-    duration: number;
-    startDate: string;
-    endDate: string;
+    monthlyPremium: number;
+    totalPremium: number;
+    sumAssured: number;
+    term: number;
     status: 'active' | 'inactive';
   }[] = [
     {
       id: 1,
       policyNumber: 'POL123456',
-      policyName: 'Target Savings Plan',
+      productName: 'Target Savings Plan',
       firstName: 'John',
       lastName: 'Doe',
-      phone: '0803 456 7890',
-      premium: 12000,
-      duration: 4,
-      startDate: '2023-01-01',
-      endDate: '2027-01-01',
+      monthlyPremium: 12000,
+      totalPremium: 320000,
+      sumAssured: 375000,
+      term: 4,
       status: 'active',
     },
     {
       id: 2,
       policyNumber: 'POL122345',
-      policyName: 'Capex Savers Plan',
+      productName: 'Capex Savers Plan',
       firstName: 'Samuel',
       lastName: 'Jackson',
-      phone: '0805 426 3256',
-      premium: 15000,
-      duration: 3,
-      startDate: '2023-03-15',
-      endDate: '2026-03-15',
+      monthlyPremium: 15000,
+      totalPremium: 540000,
+      sumAssured: 600000,
+      term: 5,
       status: 'active',
     },
     {
       id: 3,
       policyNumber: 'POL132254',
-      policyName: 'Children Education Plan',
+      productName: 'Children Education Plan',
       firstName: 'Mary',
       lastName: 'Poppins',
-      phone: '0802 123 4567',
-      premium: 20000,
-      duration: 5,
-      startDate: '2022-05-20',
-      endDate: '2027-05-20',
+      monthlyPremium: 20000,
+      totalPremium: 720000,
+      sumAssured: 800000,
+      term: 6,
       status: 'active',
     },
   ];

@@ -115,10 +115,10 @@ export const SidebarComponent = () => {
             Commissions
           </NavLink>
           <NavLink
-            href={'/agency'}
+            href={'/agency-desk'}
             icon={<BuildingOffice2Icon className="h-[18px] w-[18px]" />}
           >
-            Agency
+            Agency Desk
           </NavLink>
           <NavLink
             href={'/settings'}
