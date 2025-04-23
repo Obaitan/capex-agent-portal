@@ -4,12 +4,12 @@ import HeaderComponent from '@/components/navigation/Header';
 
 const AppLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="relative px-6 pt-[104px] md:pb-16 md:px-10 h-full bg-[#f8f8f9]">
+    <div className="relative px-6 pt-[104px] md:pb-16 md:px-10 h-full bg-[#f9f9f9]">
       <HeaderComponent/>
       <Suspense
         fallback={
           <div className="flex items-center justify-center h-full">
-            <Loader2 className="animate-spin w-8 h-8 text-blue-600" />
+            <Loader2 className="animate-spin w-8 h-8 text-blue-800" />
           </div>
         }
       >

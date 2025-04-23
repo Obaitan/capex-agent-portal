@@ -15,13 +15,14 @@ import { formatDate } from '@/lib/functions';
 
 export const columns: ColumnDef<{
   id: number;
+  policyName: string;
   firstName: string;
   lastName: string;
   phone: string;
-  email: string;
-  numberOfPolicies: number;
-  dateOnboarded: string;
-  status: 'active' | 'inactive';
+  sumAssured: number;
+  startDate: string;
+  commission: number;
+  status: 'paid' | 'pending';
 }>[] = [
   {
     id: 'select',
@@ -46,6 +47,10 @@ export const columns: ColumnDef<{
     enableHiding: false,
   },
   {
+    accessorKey: 'policyName',
+    header: 'Policy Name',
+  },
+  {
     accessorKey: 'firstName',
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Name" />
@@ -61,22 +66,24 @@ export const columns: ColumnDef<{
     header: 'Phone',
   },
   {
-    accessorKey: 'email',
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Email" />
-    ),
-  },
-  {
-    accessorKey: 'numberOfPolicies',
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Number of Policies" />
-    ),
-  },
-  {
-    accessorKey: 'dateOnboarded',
-    header: 'Date Onboarded',
+    accessorKey: 'sumAssured',
+    header: 'Sum Assured (₦)',
     cell: ({ row }) => {
-      return <span>{formatDate(row.original.dateOnboarded)}</span>;
+      return <span>{row.original.sumAssured.toLocaleString('en-NG')}</span>;
+    },
+  },
+  {
+    accessorKey: 'startDate',
+    header: 'Start Date',
+    cell: ({ row }) => {
+      return <span>{formatDate(row.original.startDate)}</span>;
+    },
+  },
+  {
+    accessorKey: 'commission',
+    header: 'Commission (₦)',
+    cell: ({ row }) => {
+      return <span>{row.original.commission.toLocaleString('en-NG')}</span>;
     },
   },
   {
@@ -86,9 +93,9 @@ export const columns: ColumnDef<{
       return (
         <span
           className={`px-2 py-1 rounded-full text-xs capitalize ${
-            row.original?.status?.toLocaleLowerCase() === 'active'
+            row.original?.status?.toLocaleLowerCase() === 'paid'
               ? 'bg-green-100 text-green-800'
-              : 'bg-gray-100 text-gray-500'
+              : 'bg-orange-100 text-orange-600'
           }`}
         >
           {row.original.status}
@@ -120,7 +127,7 @@ export const columns: ColumnDef<{
                 e.stopPropagation(); // Prevent row click
               }}
             >
-              Client Details
+              Policy Details
             </DropdownMenuItem>
             <DropdownMenuItem
               className="cursor-pointer"

@@ -15,12 +15,15 @@ import { formatDate } from '@/lib/functions';
 
 export const columns: ColumnDef<{
   id: number;
+  policyNumber: string;
+  policyName: string;
   firstName: string;
   lastName: string;
   phone: string;
-  email: string;
-  numberOfPolicies: number;
-  dateOnboarded: string;
+  premium: number;
+  duration: number;
+  startDate: string;
+  endDate: string;
   status: 'active' | 'inactive';
 }>[] = [
   {
@@ -46,6 +49,14 @@ export const columns: ColumnDef<{
     enableHiding: false,
   },
   {
+    accessorKey: 'policyNumber',
+    header: 'Policy Number',
+  },
+  {
+    accessorKey: 'policyName',
+    header: 'Policy Name',
+  },
+  {
     accessorKey: 'firstName',
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Name" />
@@ -61,22 +72,28 @@ export const columns: ColumnDef<{
     header: 'Phone',
   },
   {
-    accessorKey: 'email',
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Email" />
-    ),
-  },
-  {
-    accessorKey: 'numberOfPolicies',
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Number of Policies" />
-    ),
-  },
-  {
-    accessorKey: 'dateOnboarded',
-    header: 'Date Onboarded',
+    accessorKey: 'premium',
+    header: 'Premium (₦)',
     cell: ({ row }) => {
-      return <span>{formatDate(row.original.dateOnboarded)}</span>;
+      return <span>{row.original.premium.toLocaleString('en-NG')}</span>;
+    },
+  },
+  {
+    accessorKey: 'duration',
+    header: 'Duration (Years)',
+  },
+  {
+    accessorKey: 'startDate',
+    header: 'Start Date',
+    cell: ({ row }) => {
+      return <span>{formatDate(row.original.startDate)}</span>;
+    },
+  },
+  {
+    accessorKey: 'endDate',
+    header: 'End Date',
+    cell: ({ row }) => {
+      return <span>{formatDate(row.original.endDate)}</span>;
     },
   },
   {
@@ -120,7 +137,7 @@ export const columns: ColumnDef<{
                 e.stopPropagation(); // Prevent row click
               }}
             >
-              Client Details
+              Policy Details
             </DropdownMenuItem>
             <DropdownMenuItem
               className="cursor-pointer"

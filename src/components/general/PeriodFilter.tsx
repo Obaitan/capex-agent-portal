@@ -44,7 +44,7 @@ export default function PeriodFilter({
         <button
           id="date"
           className={cn(
-            'bg-white flex items-center gap-2 py-2 px-3 rounded-md border border-priary text-priary font-normal hover:opacity-80 text-[13px]',
+            'bg-white flex items-center gap-2 py-2 px-3 rounded-md border border-priary text-priary font-normal hover:opacity-80 text-[13px] cursor-pointer',
             !appliedRange.from && !appliedRange.to && 'bg-white'
           )}
           onClick={() => setIsPopoverOpen(!isPopoverOpen)}
@@ -60,27 +60,27 @@ export default function PeriodFilter({
               format(appliedRange.from, 'LLL dd, y')
             )
           ) : (
-            <span>Select Period</span>
+            <span>Period Filter</span>
           )}
         </button>
       </PopoverTrigger>
-      <PopoverContent className="w-auto p-3" align="end">
+      <PopoverContent className="w-auto p-2" align="end">
         {!showCustomPicker ? (
           <div className="space-y-0.5 text-sm">
             <button
-              className="w-full text-gray-500 hover:!bg-gray-50 hover:text-primary text-left px-3 py-2 cursor-pointer"
+              className="w-full text-gray-500 hover:!bg-primary/10 hover:text-primary text-left px-3 py-2 cursor-pointer"
               onClick={() => applyPredefinedRange('lastWeek')}
             >
               Last 7 Days
             </button>
             <button
-              className="w-full text-gray-500 hover:!bg-gray-50 hover:text-primary text-left px-3 py-2 cursor-pointer"
+              className="w-full text-gray-500 hover:!bg-primary/10 hover:text-primary text-left px-3 py-2 cursor-pointer"
               onClick={() => applyPredefinedRange('lastMonth')}
             >
               Last 30 Days
             </button>
             <button
-              className="w-full text-gray-500 hover:!bg-gray-50 hover:text-primary text-left px-3 py-2 cursor-pointer"
+              className="w-full text-gray-500 hover:!bg-primary/10 hover:text-primary text-left px-3 py-2 cursor-pointer"
               onClick={() => setShowCustomPicker(true)}
             >
               Custom Period

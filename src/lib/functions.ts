@@ -36,3 +36,24 @@ export function timeAgo(dateString: string) {
     return `${months} ${months === 1 ? 'month' : 'months'} ago`;
   }
 }
+
+export function formatDate(
+  date: string | number | Date,
+  locale: string = 'en-US',
+  options: Intl.DateTimeFormatOptions = {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+  }
+): string {
+  try {
+    const parsedDate = new Date(date);
+    if (Number.isNaN(parsedDate.getTime())) {
+      console.warn('Invalid date');
+    }
+    return new Intl.DateTimeFormat(locale, options).format(parsedDate);
+  } catch (error) {
+    console.error('Error formatting date:', error);
+    return '';
+  }
+}

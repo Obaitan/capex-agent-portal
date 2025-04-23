@@ -15,13 +15,13 @@ import { formatDate } from '@/lib/functions';
 
 export const columns: ColumnDef<{
   id: number;
+  quoteNumber: string;
+  policyName: string;
   firstName: string;
   lastName: string;
   phone: string;
-  email: string;
-  numberOfPolicies: number;
-  dateOnboarded: string;
-  status: 'active' | 'inactive';
+  premium: number;
+  duration: number;
 }>[] = [
   {
     id: 'select',
@@ -46,6 +46,14 @@ export const columns: ColumnDef<{
     enableHiding: false,
   },
   {
+    accessorKey: 'quoteNumber',
+    header: 'Quote Number',
+  },
+  {
+    accessorKey: 'policyName',
+    header: 'Policy Name',
+  },
+  {
     accessorKey: 'firstName',
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Name" />
@@ -61,41 +69,17 @@ export const columns: ColumnDef<{
     header: 'Phone',
   },
   {
-    accessorKey: 'email',
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Email" />
-    ),
-  },
-  {
-    accessorKey: 'numberOfPolicies',
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Number of Policies" />
-    ),
-  },
-  {
-    accessorKey: 'dateOnboarded',
-    header: 'Date Onboarded',
+    accessorKey: 'premium',
+    header: 'Premium (₦)',
     cell: ({ row }) => {
-      return <span>{formatDate(row.original.dateOnboarded)}</span>;
+      return <span>{row.original.premium.toLocaleString('en-NG')}</span>;
     },
   },
   {
-    accessorKey: 'status',
-    header: 'Status',
-    cell: ({ row }) => {
-      return (
-        <span
-          className={`px-2 py-1 rounded-full text-xs capitalize ${
-            row.original?.status?.toLocaleLowerCase() === 'active'
-              ? 'bg-green-100 text-green-800'
-              : 'bg-gray-100 text-gray-500'
-          }`}
-        >
-          {row.original.status}
-        </span>
-      );
-    },
+    accessorKey: 'duration',
+    header: 'Duration (Years)',
   },
+
   {
     id: 'actions',
     cell: ({ row }) => {
@@ -120,7 +104,7 @@ export const columns: ColumnDef<{
                 e.stopPropagation(); // Prevent row click
               }}
             >
-              Client Details
+              Quote Details
             </DropdownMenuItem>
             <DropdownMenuItem
               className="cursor-pointer"

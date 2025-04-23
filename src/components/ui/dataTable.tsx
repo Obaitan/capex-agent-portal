@@ -4,7 +4,12 @@ import { useState } from 'react';
 import {
   ColumnDef,
   flexRender,
+  ColumnFiltersState,
+  SortingState,
   getCoreRowModel,
+  getFilteredRowModel,
+  getPaginationRowModel,
+  getSortedRowModel,
   useReactTable,
 } from '@tanstack/react-table';
 
@@ -20,11 +25,12 @@ import Image from 'next/image';
 import PeriodFilter from '../general/PeriodFilter';
 import {
   DropdownMenu,
-  DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuTrigger,
   DropdownMenuItem,
 } from '@/components/ui/dropdown-menu';
+import { DataTablePagination } from '../table/TablePagination';
+import { FunnelIcon, XMarkIcon } from '@heroicons/react/24/solid';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -36,19 +42,43 @@ export function DataTable<TData, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
+  const [sorting, setSorting] = useState<SortingState>([]);
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+  const [rowSelection, setRowSelection] = useState({});
+
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    onSortingChange: setSorting,
+    getSortedRowModel: getSortedRowModel(),
+    onColumnFiltersChange: setColumnFilters,
+    getFilteredRowModel: getFilteredRowModel(),
+    onRowSelectionChange: setRowSelection,
+    state: {
+      sorting,
+      columnFilters,
+      rowSelection,
+    },
   });
 
   const [appliedRange, setAppliedRange] = useState<{ from?: Date; to?: Date }>(
     {}
   );
+  const filteredColumns = [...table.getAllColumns()];
+  if (filteredColumns.length > 1) {
+    filteredColumns.splice(0, 1);
+    filteredColumns.splice(filteredColumns.length - 1, 1);
+  }
+
+  const [selectedFilter, setSelectedFilter] = useState(
+    filteredColumns[0]?.id || ''
+  );
 
   return (
-    <>
-      {/* <div className="flex items-center gap-4 pb-4">
+    <div className="bg-white shadow-sm rounded p-4 md:p-6">
+      <div className="flex justify-between items-center gap-4">
         <div className="flex flex-wrap items-end gap-3">
           {filteredColumns.map(
             (column) =>
@@ -65,14 +95,14 @@ export function DataTable<TData, TValue>({
                       .getColumn(column.id)
                       ?.setFilterValue(event.target.value)
                   }
-                  className="w-48 px-3 py-1.5 text-gray-700 border-b !border-b-gray-100 outline-b outline-0 focus:border-b-2 focus:!border-b-secondary-200 rounded-none capitalize text-sm"
+                  className="w-52 px-3 py-1.5 text-gray-700 border-b !border-b-gray-200 outline-b outline-0 focus:border-b-2 focus:!border-b-primary rounded-none capitalize text-sm"
                 />
               )
           )}
 
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <button className="bg-white border text-secondary-200 border-secondary-200 rounded p-2 hover:text-white hover:bg-secondary-200 outline-none">
+              <button className="bg-white border text-primary border-gray-200 rounded p-2.5 hover:text-white hover:bg-primary/75 outline-none cursor-pointer">
                 <FunnelIcon className="h-4 w-4" />
               </button>
             </DropdownMenuTrigger>
@@ -80,9 +110,9 @@ export function DataTable<TData, TValue>({
               {filteredColumns.map((column) => (
                 <DropdownMenuItem
                   key={column.id}
-                  className={`capitalize cursor-pointer text-gray-700 hover:!bg-secondary-50 ${
+                  className={`capitalize cursor-pointer text-gray-500 hover:!bg-secondary-50 ${
                     selectedFilter === column.id
-                      ? 'bg-secondary-50 text-secondary-200'
+                      ? 'bg-primary/10 text-primary'
                       : ''
                   }`}
                   onClick={() => setSelectedFilter(column.id)}
@@ -92,48 +122,22 @@ export function DataTable<TData, TValue>({
               ))}
               <DropdownMenuItem
                 onClick={() => setColumnFilters([])}
-                className="text-error-300 hover:!text-error-300 hover:!bg-error-50 hover:!bg-opacity-30 cursor-pointer"
+                className="!text-red-500 hover:!text-red-500 hover:!bg-red-50 cursor-pointer"
               >
-                <XMarkIcon className="h-4 w-4 mr-1" />
+                <XMarkIcon className="text-red-500 h-4 w-4 mr-0.5" />
                 Clear Filters
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-
         </div>
 
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <button className="bg-white border text-secondary-200 border-secondary-200 rounded p-1.5 ml-auto hover:text-white hover:bg-secondary-200 outline-none">
-              <ViewColumnsIcon className="h-6 w-6" />
-            </button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            {table
-              .getAllColumns()
-              .filter((column) => column.getCanHide())
-              .map((column) => {
-                return (
-                  <DropdownMenuCheckboxItem
-                    key={column.id}
-                    className="capitalize text-gray-700"
-                    checked={column.getIsVisible()}
-                    onCheckedChange={(value) =>
-                      column.toggleVisibility(!!value)
-                    }
-                  >
-                    {column.id}
-                  </DropdownMenuCheckboxItem>
-                );
-              })}
-          </DropdownMenuContent>
-        </DropdownMenu>
         <PeriodFilter
           setAppliedRange={setAppliedRange}
           appliedRange={appliedRange}
-          />
-      </div> */}
-      <div className="bg-white rounded-md border mt-3">
+        />
+      </div>
+
+      <div className="bg-white rounded-md border mt-4">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -142,7 +146,7 @@ export function DataTable<TData, TValue>({
                   return (
                     <TableHead
                       key={header.id}
-                      className="!bg-[#02384D]/90 !text-white !px-3"
+                      className="!bg-blue-50 !text-primary !p-3"
                     >
                       {header.isPlaceholder
                         ? null
@@ -196,6 +200,7 @@ export function DataTable<TData, TValue>({
           </TableBody>
         </Table>
       </div>
-    </>
+      <DataTablePagination table={table} />
+    </div>
   );
 }
