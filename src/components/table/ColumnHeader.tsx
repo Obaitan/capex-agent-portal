@@ -1,15 +1,23 @@
-import { ArrowDown, ArrowUp, ArrowUpDown, EyeOff } from 'lucide-react';
+import { Column } from '@tanstack/react-table';
+import { ArrowDown, ArrowUp, ChevronsUpDown, EyeOff } from 'lucide-react';
+
 import { cn } from '@/lib/utils';
+import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '../ui/dropdown-menu';
-import { DataTableColumnHeaderProps } from '@/types';
+} from '@/components/ui/dropdown-menu';
 
-export function ColumnHeader<TData, TValue>({
+interface DataTableColumnHeaderProps<TData, TValue>
+  extends React.HTMLAttributes<HTMLDivElement> {
+  column: Column<TData, TValue>;
+  title: string;
+}
+
+export function DataTableColumnHeader<TData, TValue>({
   column,
   title,
   className,
@@ -19,27 +27,23 @@ export function ColumnHeader<TData, TValue>({
   }
 
   return (
-    <div
-      className={cn(
-        'flex items-center space-x-2 hover:bg-transparent',
-        className
-      )}
-    >
+    <div className={cn('flex items-center space-x-2', className)}>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <button
-            className="flex items-center hover:!bg-transparent data-[state=open]:bg-accent outline-none"
-            onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+          <Button
+            variant="ghost"
+            size="sm"
+            className="-ml-3 h-8 data-[state=open]:bg-accent"
           >
             <span>{title}</span>
             {column.getIsSorted() === 'desc' ? (
-              <ArrowDown className="ml-1.5 h-4 w-4 " />
+              <ArrowDown />
             ) : column.getIsSorted() === 'asc' ? (
-              <ArrowUp className="ml-1.5 h-4 w-4 " />
+              <ArrowUp />
             ) : (
-              <ArrowUpDown className="ml-1.5 h-4 w-4" />
+              <ChevronsUpDown />
             )}
-          </button>
+          </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="start">
           <DropdownMenuItem onClick={() => column.toggleSorting(false)}>

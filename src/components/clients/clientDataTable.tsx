@@ -1,27 +1,11 @@
 'use client';
 
-import * as React from 'react';
 import { useState } from 'react';
-import Image from 'next/image';
-import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuTrigger,
-  DropdownMenuItem,
-} from '@/components/ui/dropdown-menu';
 import {
   ColumnDef,
-  ColumnFiltersState,
-  SortingState,
-  VisibilityState,
   flexRender,
   getCoreRowModel,
-  getFilteredRowModel,
-  getPaginationRowModel,
-  getSortedRowModel,
   useReactTable,
-  Row,
 } from '@tanstack/react-table';
 
 import {
@@ -32,82 +16,39 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+import Image from 'next/image';
+import PeriodFilter from '../general/PeriodFilter';
 import {
-  FunnelIcon,
-  ViewColumnsIcon,
-  XMarkIcon,
-} from '@heroicons/react/24/solid';
-import { TablePagination } from '@/components/table/TablePagination';
-import SideModal from '../layout/SideModal';
-import LoanDetailsComponent from './clientDetails';
-import { FormattedLoanData } from '@/types';
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+  DropdownMenuItem,
+} from '@/components/ui/dropdown-menu';
 
-interface DataTableProps {
-  columns: ColumnDef<FormattedLoanData>[];
-  data: FormattedLoanData[];
-  emptyMessage?: string;
+interface DataTableProps<TData, TValue> {
+  columns: ColumnDef<TData, TValue>[];
+  data: TData[];
 }
+const emptyMessage = 'No client records found.';
 
-export function DataTable({ 
-  columns, 
-  data, 
-  emptyMessage = "No records to display." 
-}: DataTableProps) {
-  const [sorting, setSorting] = React.useState<SortingState>([]);
-  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
-  const [columnVisibility, setColumnVisibility] =
-    React.useState<VisibilityState>({});
-  const [rowSelection, setRowSelection] = useState({});
-  const [openDetailsModal, setOpenDetailsModal] = useState(false);
-  const [selectedLoan, setSelectedLoan] = useState<FormattedLoanData | null>(null);
-
-  const closeModal = () => {
-    setOpenDetailsModal(false);
-  };
-
-  const handleRowClick = (row: Row<FormattedLoanData>) => {
-    // Get the original data for this row
-    const rowData = row.original;
-    
-    // Set the selected loan 
-    setSelectedLoan(rowData);
-    
-    // Open the modal
-    setOpenDetailsModal(true);
-  };
-
+export function DataTable<TData, TValue>({
+  columns,
+  data,
+}: DataTableProps<TData, TValue>) {
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-    onSortingChange: setSorting,
-    getSortedRowModel: getSortedRowModel(),
-    onColumnFiltersChange: setColumnFilters,
-    getFilteredRowModel: getFilteredRowModel(),
-    onColumnVisibilityChange: setColumnVisibility,
-    onRowSelectionChange: setRowSelection,
-    state: {
-      sorting,
-      columnFilters,
-      columnVisibility,
-      rowSelection,
-    },
   });
 
-  const filteredColumns = [...table.getAllColumns()];
-  if (filteredColumns.length > 1) {
-    filteredColumns.splice(0, 1);
-    filteredColumns.splice(filteredColumns.length - 1, 1);
-  }
-
-  const [selectedFilter, setSelectedFilter] = useState(
-    filteredColumns[0]?.id || ''
+  const [appliedRange, setAppliedRange] = useState<{ from?: Date; to?: Date }>(
+    {}
   );
 
   return (
-    <div>
-      <div className="flex items-center gap-4 pb-4">
+    <>
+      {/* <div className="flex items-center gap-4 pb-4">
         <div className="flex flex-wrap items-end gap-3">
           {filteredColumns.map(
             (column) =>
@@ -158,6 +99,7 @@ export function DataTable({
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
+
         </div>
 
         <DropdownMenu>
@@ -186,18 +128,21 @@ export function DataTable({
               })}
           </DropdownMenuContent>
         </DropdownMenu>
-      </div>
-
-      <div className="rounded border">
+        <PeriodFilter
+          setAppliedRange={setAppliedRange}
+          appliedRange={appliedRange}
+          />
+      </div> */}
+      <div className="bg-white rounded-md border mt-3">
         <Table>
-          <TableHeader className="bg-secondary-50">
+          <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
                   return (
                     <TableHead
-                      className="!text-secondary-200 !px-3"
                       key={header.id}
+                      className="!bg-[#02384D]/90 !text-white !px-3"
                     >
                       {header.isPlaceholder
                         ? null
@@ -217,11 +162,9 @@ export function DataTable({
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && 'selected'}
-                  onClick={() => handleRowClick(row)}
-                  className="cursor-pointer hover:bg-gray-50"
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell className="px-3 py-2" key={cell.id}>
+                    <TableCell key={cell.id} className="px-3 py-2">
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext()
@@ -243,7 +186,7 @@ export function DataTable({
                       height={144}
                       width={150}
                       priority
-                      className="w-32 mx-auto"
+                      className="w-36 mx-auto"
                     />
                     <p className="mt-2 text-gray-500">{emptyMessage}</p>
                   </div>
@@ -253,12 +196,6 @@ export function DataTable({
           </TableBody>
         </Table>
       </div>
-      <TablePagination table={table} />
-      
-      {/* Loan Details Modal */}
-      <SideModal isOpen={openDetailsModal} onClose={closeModal}>
-        <LoanDetailsComponent loan={selectedLoan} />
-      </SideModal>
-    </div>
+    </>
   );
 }

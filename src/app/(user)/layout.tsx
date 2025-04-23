@@ -4,7 +4,7 @@ import HeaderComponent from '@/components/navigation/Header';
 
 const AppLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="relative px-6 pt-[84px] md:pb-16 md:px-10 h-full bg-[#f8f8f9]">
+    <div className="relative px-6 pt-[104px] md:pb-16 md:px-10 h-full bg-[#f8f8f9]">
       <HeaderComponent/>
       <Suspense
         fallback={
