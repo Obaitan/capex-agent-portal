@@ -11,7 +11,6 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Checkbox } from '@/components/ui/checkbox';
 import { DataTableColumnHeader } from '../table/ColumnHeader';
-import { formatDate } from '@/lib/functions';
 
 export const columns: ColumnDef<{
   id: number;
@@ -110,9 +109,7 @@ export const columns: ColumnDef<{
   },
   {
     id: 'actions',
-    cell: ({ row }) => {
-      const payment = row.original;
-
+    cell: () => {
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
