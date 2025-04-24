@@ -1,10 +1,8 @@
 import Image from 'next/image';
-import StatusChip from '../general/StatusChip';
+// import StatusChip from '../general/StatusChip';
 import { CheckCircleIcon, XCircleIcon } from '@heroicons/react/24/solid';
-import { formatDate } from '@/utils/functions';
+import { formatDate } from '@/lib/functions';
 import { useEffect, useState } from 'react';
-import { AllCustomersLoans, RepaymentItem } from '@/services/apiQueries/customersDetails';
-import SpinnerItem from '@/components/forms/SpinnerItem';
 
 // Define an interface for raw loan data from API
 interface RawLoanData {
@@ -54,121 +52,12 @@ interface LoanProps {
   originalLoan?: RawLoanData; // Now using the defined type instead of any
 }
 
-const LoanDetailsComponent: React.FC<{ loan?: LoanProps | null }> = ({ loan = null }) => {
+const LoanDetailsComponent: React.FC<{ loan?: LoanProps | null }> = ({
+  loan = null,
+}) => {
   const [loanDetails, setLoanDetails] = useState<LoanProps | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [repayments, setRepayments] = useState<RepaymentItem[]>([]);
-
-  useEffect(() => {
-    async function fetchLoanDetails() {
-      if (!loan) {
-        setError('No loan data provided');
-        return;
-      }
-      
-      // Use either the provided loanNumber or try to find it in originalLoan
-      const loanNumber = loan.loanNumber || loan.originalLoan?.loanNumber;
-      
-      if (!loanNumber) {
-        setError('Loan number is required');
-        return;
-      }
-
-      setIsLoading(true);
-      try {
-        // First, set the basic loan details we already have
-        setLoanDetails(loan);
-        
-        // Get detailed loan information
-        const details = await AllCustomersLoans.getLoanDetails(loanNumber);
-        
-        if (details) {
-          // Update with the full loan details
-          setLoanDetails(prev => ({
-            ...prev,
-            ...details
-          }));
-        }
-        
-        // Fetch repayments separately
-        const repaymentsData = await AllCustomersLoans.getRepaymentsByLoanNumber(loanNumber);
-        if (repaymentsData && repaymentsData.length > 0) {
-          setRepayments(repaymentsData);
-        }
-        
-        setError(null);
-      } catch (err) {
-        console.error('Error fetching loan details:', err);
-        setError('Failed to load complete loan details');
-      } finally {
-        setIsLoading(false);
-      }
-    }
-
-    if (loan) {
-      fetchLoanDetails();
-    }
-  }, [loan]);
-
-  // If we have any details at all (either from the prop or from the API)
-  const displayLoan = loanDetails || loan;
-
-  if (isLoading) {
-    return (
-      <div className="flex justify-center items-center min-h-[200px]">
-        <SpinnerItem className="!border-t-secondary-200" />
-      </div>
-    );
-  }
-
-  if (error && !displayLoan) {
-    return (
-      <div className="p-4 bg-red-50 text-red-700 rounded-md">
-        <p className="font-medium">Error:</p>
-        <p>{error}</p>
-      </div>
-    );
-  }
-
-  if (!displayLoan) {
-    return (
-      <div className="p-4 bg-gray-50 text-gray-700 rounded-md">
-        <p>No loan data available</p>
-      </div>
-    );
-  }
-
-  // Use the loan from originalLoan if available, otherwise use the displayLoan directly
-  const effectiveLoan = displayLoan.originalLoan || displayLoan;
-
-  // Extract values from loan data with fallbacks
-  const {
-    customerName = 'Unknown Customer',
-    customerID = 'N/A',
-    phoneNumber = 'N/A',
-    email = 'N/A',
-    status = 'ACTIVE',
-    amount = 0,
-    createDate = new Date().toISOString(),
-    duration = 0,
-    loanNumber = '',
-    interest = 0,
-    amountPaid = 0,
-    installmentAmount = 0,
-  } = effectiveLoan;
-
-  // Calculate derived values
-  const totalAmount = Number(amount) + Number(interest);
-  const paidAmount = Number(amountPaid);
-  const outstandingAmount = totalAmount - paidAmount;
-  const monthlyPayment = installmentAmount || (totalAmount / duration) || 0;
-  const installmentsPaid = Math.round(paidAmount / monthlyPayment) || 0;
-
-  // Calculate maturity date
-  const disbursementDate = new Date(createDate);
-  const maturityDate = new Date(disbursementDate);
-  maturityDate.setDate(maturityDate.getDate() + Number(duration));
 
   // Format status from API
   const getStatus = (status: string) => {
@@ -199,14 +88,14 @@ const LoanDetailsComponent: React.FC<{ loan?: LoanProps | null }> = ({ loan = nu
           <div className="space-y-2">
             <div className="flex items-center gap-3 flex-wrap">
               <p className="text-gray-700 capitalize text-[15px]">
-                {customerName}
+                Mark Adebayo
               </p>
-              <StatusChip status={getStatus(status)} />
+              {/* <StatusChip status={getStatus(status)} /> */}
             </div>
             <div className="flex flex-wrap items-center gap-x-1.5 gap-y-0.5 text-xs text-gray-600 capitalize font-medium">
-              <span className="text-primary-200">{customerID}</span> |
-              <span>{phoneNumber}</span> |
-              <span className="lowercase">{email}</span>
+              <span className="text-primary-200">10234</span> |
+              <span>012345677</span> |
+              <span className="lowercase">eze@test.com</span>
             </div>
           </div>
         </div>
@@ -219,13 +108,13 @@ const LoanDetailsComponent: React.FC<{ loan?: LoanProps | null }> = ({ loan = nu
             <div className="space-y-0.5">
               <p className="text-xs text-gray-300">Loan Number</p>
               <p className="text-[13px] text-gray-700 uppercase">
-              {loanNumber}
+                123456789
               </p>
             </div>
             <div className="space-y-0.5">
               <p className="text-xs text-gray-300">Loan Amount</p>
               <p className="text-[13px] text-gray-700 capitalize">
-                {Number(amount).toLocaleString('en-NG', {
+                {Number(12345).toLocaleString('en-NG', {
                   style: 'currency',
                   currency: 'NGN',
                 })}
@@ -234,25 +123,25 @@ const LoanDetailsComponent: React.FC<{ loan?: LoanProps | null }> = ({ loan = nu
             <div className="space-y-0.5">
               <p className="text-xs text-gray-300">Date Disbursed</p>
               <p className="text-[13px] text-gray-700 capitalize">
-                {formatDate(createDate)}
+                {formatDate('january 12, 2023')}
               </p>
             </div>
             <div className="space-y-0.5">
               <p className="text-xs text-gray-300">Maturity Date</p>
               <p className="text-[13px] text-gray-700 capitalize">
-                {formatDate(maturityDate.toString())}
+                {formatDate('feb 12, 2024'.toString())}
               </p>
             </div>
             <div className="space-y-0.5">
               <p className="text-xs text-gray-300">Interest Rate</p>
               <p className="text-[13px] text-gray-700 capitalize">
-                {(Number(interest) / Number(amount) * 100).toFixed(1)}%
+                {((Number(1200) / Number(2400)) * 100).toFixed(1)}%
               </p>
             </div>
             <div className="space-y-0.5">
               <p className="text-xs text-gray-300">Interest Amount</p>
               <p className="text-[13px] text-gray-700 capitalize">
-                {Number(interest).toLocaleString('en-NG', {
+                {Number(1200).toLocaleString('en-NG', {
                   style: 'currency',
                   currency: 'NGN',
                 })}
@@ -261,17 +150,19 @@ const LoanDetailsComponent: React.FC<{ loan?: LoanProps | null }> = ({ loan = nu
             <div className="space-y-0.5">
               <p className="text-xs text-gray-300">Tenure</p>
               <p className="text-[13px] text-gray-700 capitalize">
-                {duration} {Number(duration) === 1 ? 'day' : 'days'}
+                15 {Number(15) === 1 ? 'day' : 'days'}
               </p>
             </div>
             <div className="space-y-0.5">
               <p className="text-xs text-gray-300">Installments Paid</p>
-              <p className="text-[13px] text-gray-700 capitalize">{installmentsPaid}</p>
+              <p className="text-[13px] text-gray-700 capitalize">
+               3
+              </p>
             </div>
             <div className="space-y-0.5">
               <p className="text-xs text-gray-300">Monthly Payments</p>
               <p className="text-[13px] text-gray-700 capitalize">
-                {monthlyPayment.toLocaleString('en-NG', {
+                {(12000).toLocaleString('en-NG', {
                   style: 'currency',
                   currency: 'NGN',
                 })}
@@ -280,7 +171,7 @@ const LoanDetailsComponent: React.FC<{ loan?: LoanProps | null }> = ({ loan = nu
             <div className="space-y-0.5">
               <p className="text-xs text-gray-300">Total Paid</p>
               <p className="text-[13px] text-gray-700 capitalize">
-                {paidAmount.toLocaleString('en-NG', {
+                {(12900).toLocaleString('en-NG', {
                   style: 'currency',
                   currency: 'NGN',
                 })}
@@ -289,7 +180,7 @@ const LoanDetailsComponent: React.FC<{ loan?: LoanProps | null }> = ({ loan = nu
             <div className="space-y-0.5">
               <p className="text-xs text-gray-300">Outstanding</p>
               <p className="text-[13px] text-gray-700 capitalize">
-                {outstandingAmount.toLocaleString('en-NG', {
+                {(12000).toLocaleString('en-NG', {
                   style: 'currency',
                   currency: 'NGN',
                 })}
@@ -298,7 +189,7 @@ const LoanDetailsComponent: React.FC<{ loan?: LoanProps | null }> = ({ loan = nu
             <div className="space-y-0.5">
               <p className="text-xs text-gray-300">Total Expected Repayment</p>
               <p className="text-[13px] text-gray-700 capitalize">
-                {totalAmount.toLocaleString('en-NG', {
+                {(18000).toLocaleString('en-NG', {
                   style: 'currency',
                   currency: 'NGN',
                 })}
@@ -306,7 +197,7 @@ const LoanDetailsComponent: React.FC<{ loan?: LoanProps | null }> = ({ loan = nu
             </div>
           </div>
         </div>
-        
+
         <div className="hidden md:block mt-3">
           <div className="bg-secondary-50 py-3 px-3.5 md:px-4 text-sm text-gray-800">
             Repayments
@@ -318,9 +209,12 @@ const LoanDetailsComponent: React.FC<{ loan?: LoanProps | null }> = ({ loan = nu
             <p>Date Paid</p>
             <p>Channel</p>
           </div>
-          {repayments.length > 0 ? (
+          {/* {repayments.length > 0 ? (
             repayments.map((repayment, index) => (
-              <div key={repayment.id || index} className="grid grid-cols-5 border-b border-b-[#eee] py-3 px-3.5 md:px-4 text-xs text-gray-700 capitalize">
+              <div
+                key={repayment.id || index}
+                className="grid grid-cols-5 border-b border-b-[#eee] py-3 px-3.5 md:px-4 text-xs text-gray-700 capitalize"
+              >
                 <p>{repayment.reference || 'N/A'}</p>
                 <p>
                   {Number(repayment.amount || 0).toLocaleString('en-NG', {
@@ -334,7 +228,9 @@ const LoanDetailsComponent: React.FC<{ loan?: LoanProps | null }> = ({ loan = nu
                   {repayment.dueDate ? formatDate(repayment.dueDate) : 'N/A'}
                 </p>
                 <p>
-                  {repayment.paymentDate ? formatDate(repayment.paymentDate) : 'N/A'}
+                  {repayment.paymentDate
+                    ? formatDate(repayment.paymentDate)
+                    : 'N/A'}
                 </p>
                 <div className="flex gap-2 items-center">
                   <span>{repayment.repaymentChannel || 'N/A'}</span>
@@ -350,7 +246,7 @@ const LoanDetailsComponent: React.FC<{ loan?: LoanProps | null }> = ({ loan = nu
             <div className="flex justify-center items-center h-20 text-gray-400 text-sm border-b border-b-[#eee]">
               No repayments yet
             </div>
-          )}
+          )} */}
         </div>
       </div>
     </div>
