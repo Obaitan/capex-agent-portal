@@ -43,7 +43,7 @@ const LoginPage = () => {
         </div>
         <form
           onSubmit={onSubmit}
-          className="grid grid-cols-1 gap-8 place-content-center w-full md:w-[400px]"
+          className="grid grid-cols-1 gap-8 place-content-center w-full md:w-[450px]"
         >
           <div className="flex flex-col items-center gap-5 w-full text-[15px]">
             <div className="grid grid-cols-1 gap-x-10 gap-y-5 w-full">

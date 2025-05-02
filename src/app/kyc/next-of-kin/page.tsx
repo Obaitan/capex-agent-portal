@@ -10,14 +10,20 @@ import { SignupData } from '@/types';
 import { Loader2 } from 'lucide-react';
 import Select from '@/components/general/Select';
 
-export default function SignupPage() {
+export default function NextOfKinPage() {
   const [isPending, startTransition] = useTransition();
-  const [signUpData, setSignUpData] = useState<SignupData>({
+  const [signUpData, setSignUpData] = useState<{
+    firstName: string;
+    lastName: string;
+    phoneNumber: string;
+    email: string;
+    relationship: string;
+  }>({
     firstName: '',
     lastName: '',
     email: '',
-    phoneNo: '',
-    address: '',
+    phoneNumber: '',
+    relationship: '',
   });
 
   const {
@@ -42,19 +48,19 @@ export default function SignupPage() {
       <div className="flex flex-col items-center gap-9">
         <div className="text-center space-y-2">
           <p className="text-[#02364B] font-semibold text-2xl md:text-3xl">
-            Sign Up
+            Next of Kin
           </p>
           <p className="text-gray-600">
-            Fill out the form below to create an account
+            Provide your next of kin information to complete the KYC process.
           </p>
         </div>
 
         <form
           onSubmit={onSubmit}
-          className="grid grid-cols-1 gap-8 place-content-center w-full md:w-[600px]"
+          className="grid grid-cols-1 gap-8 place-content-center w-full md:w-[500px]"
         >
           <div className="flex flex-col items-center gap-[18px] w-full text-[15px]">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-4 md:gap-y-[18px] w-full">
+            <div className="grid grid-cols-1 gap-x-10 gap-y-[18px] w-full">
               <div className="flex flex-col gap-1 w-full">
                 <input
                   placeholder="First Name"
@@ -105,17 +111,7 @@ export default function SignupPage() {
                   </p>
                 )}
               </div>
-              <div className="flex flex-col gap-1 w-full relative pt-2">
-                <p className="absolute text-xs text-primary -top-1 left-2.5">
-                  Date of Birth
-                </p>
-                <input
-                  type="date"
-                  className={`border-b border-b-gray-300 w-full px-2.5 h-9
-                  placeholder:text-[#9a9a9a] text-gray-700 placeholder:font-light
-                  outline-0 focus:border-b-2 focus:border-b-blue-900`}
-                />
-              </div>
+
               <Select
                 options={[
                   { label: 'Male', value: 'male' },
@@ -133,16 +129,16 @@ export default function SignupPage() {
                   outline-0 focus:border-b-2 focus:border-b-blue-900 ${
                     errors.email ? 'border-red-300' : ''
                   }`}
-                  {...register('phoneNo', {
+                  {...register('phoneNumber', {
                     required: true,
                     validate: (value) => validator.isMobilePhone(value),
                   })}
                 />
-                {errors?.phoneNo && (
+                {errors?.phoneNumber && (
                   <p className="text-red-400 text-sm">
-                    {errors.phoneNo?.type === 'required' &&
+                    {errors.phoneNumber?.type === 'required' &&
                       'Phone Number is required'}
-                    {errors.phoneNo?.type === 'validate' &&
+                    {errors.phoneNumber?.type === 'validate' &&
                       'Phone Number must be valid'}
                   </p>
                 )}
@@ -167,78 +163,25 @@ export default function SignupPage() {
                   </p>
                 )}
               </div>
-              <div className="col-span-full flex flex-col gap-1 w-full">
-                <input
-                  placeholder="Address"
-                  className={`border-b border-b-gray-300 w-full px-2.5 h-9
-                  placeholder:text-[#9a9a9a] text-gray-700 placeholder:font-light
-                  outline-0 focus:border-b-2 focus:border-b-blue-900 ${
-                    errors.email ? 'border-red-300' : ''
-                  }`}
-                  {...register('address', {
-                    required: true,
-                    validate: (value) => validator.isEmail(value),
-                  })}
-                />
-                {errors?.address && (
-                  <p className="text-red-400 font-medium text-sm">
-                    {errors.address.type === 'required' &&
-                      'Address is required'}
-                  </p>
-                )}
-              </div>
               <Select
                 options={[
-                  { label: 'Lagos', value: 'lagos' },
-                  { label: 'Ogun', value: 'ogun' },
+                  { label: 'Father', value: 'father' },
+                  { label: 'Mother', value: 'mother' },
+                  { label: 'Brother', value: 'brother' },
+                  { label: 'Sister', value: 'sister' },
+                  { label: 'Spouse', value: 'spouse' },
                 ]}
                 selectedValue=""
-                placeholder="State"
+                placeholder="Relationship"
                 onChange={() => {}}
               />
-              <Select
-                options={[
-                  { label: 'Ikeja', value: 'ikeja' },
-                  { label: 'VI', value: 'vi' },
-                  { label: 'Shagamu', value: 'shagamu' },
-                  { label: 'Abeokuta', value: 'abeokuta' },
-                ]}
-                selectedValue=""
-                placeholder="City"
-                onChange={() => {}}
-              />
-              {/* <div className="col-span-full mt-2 px-2.5">
-                <p className="text-gray-800 font-medium relative top-1.5">
-                  Agency Manager
-                </p>
-              </div>
-              <div className="flex flex-col gap-1 w-full">
-                <input
-                  placeholder="Name"
-                  className={`border-b border-b-gray-300 w-full px-2.5 h-9
-                  placeholder:text-[#9a9a9a] text-gray-700 placeholder:font-light
-                  outline-0 focus:border-b-2 focus:border-b-blue-900 ${
-                    errors.email ? 'border-red-300' : ''
-                  }`}
-                />
-              </div>
-              <div className="flex flex-col gap-1 w-full">
-                <input
-                  placeholder="0802 345 6789"
-                  className={`border-b border-b-gray-300 w-full px-2.5 h-9
-                  placeholder:text-[#9a9a9a] text-gray-700 placeholder:font-light
-                  outline-0 focus:border-b-2 focus:border-b-blue-900 ${
-                    errors.email ? 'border-red-300' : ''
-                  }`}
-                />
-              </div> */}
             </div>
 
             <GenericButton
               type="submit"
               className="bg-[#02364B] mt-6 !w-full cursor-pointer"
               onClick={() => {
-                router.push('/kyc');
+                router.push('/dashboard');
               }}
             >
               {isPending ? (
@@ -246,18 +189,9 @@ export default function SignupPage() {
                   <Loader2 className="h-6 w-6" />
                 </div>
               ) : (
-                'Next'
+                'Submit'
               )}
             </GenericButton>
-
-            <p className="text-gray-700 text-base font-normal">
-              Already have an account?
-              <Link href={'/auth/signin'}>
-                <span className="text-blue-900 font-medium ml-2 hover:underline-offset-1 hover:underline">
-                  Sign In
-                </span>
-              </Link>
-            </p>
           </div>
         </form>
       </div>
