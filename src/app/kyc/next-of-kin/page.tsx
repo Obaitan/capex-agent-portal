@@ -4,9 +4,7 @@ import { useRouter } from 'next/navigation';
 import { GenericButton } from '@/components/general/Button';
 import { useTransition, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import Link from 'next/link';
 import validator from 'validator';
-import { SignupData } from '@/types';
 import { Loader2 } from 'lucide-react';
 import Select from '@/components/general/Select';
 
