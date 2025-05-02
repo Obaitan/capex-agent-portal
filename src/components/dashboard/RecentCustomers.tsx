@@ -1,6 +1,4 @@
-import { Button } from '@/components/ui/button';
 import { Avatar } from '@/components/ui/avatar';
-import { Card, CardContent, CardHeader } from '@/components/ui/card';
 
 const clients = [
   {
@@ -31,7 +29,7 @@ const clients = [
 
 const RecentCustomers = () => {
   return (
-    <div className="px-6 md:px-8">
+    <div className="pr-6 md:pl-2 md:pr-8">
       <div className="flex items-center justify-between space-y-0 mb-7">
         <div>
           <h3 className="text-lg font-semibold">Recent Clients</h3>
@@ -54,11 +52,15 @@ const RecentCustomers = () => {
                 </div>
               </Avatar>
               <div className="flex-1">
-                <h4 className="font-medium text-primary text-sm">{client.name}</h4>
+                <h4 className="font-medium text-primary text-sm">
+                  {client.name}
+                </h4>
                 <p className="text-xs text-gray-500">{client.plan}</p>
               </div>
               <div className="text-right">
-                <p className="font-medium text-primary text-sm">{client.amount}</p>
+                <p className="font-medium text-primary text-sm">
+                  {client.amount}
+                </p>
                 <p className="text-xs text-gray-500">{client.frequency}</p>
               </div>
             </div>
