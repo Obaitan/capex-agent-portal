@@ -42,15 +42,25 @@ export default function NextOfKinPage() {
   const router = useRouter();
 
   return (
-    <div className="flex justify-center items-center w-full h-full px-6">
-      <div className="flex flex-col items-center gap-9">
+    <div className="flex justify-center items-center w-full h-full px-6 my-20 md:my-0">
+      <div className="flex flex-col items-center gap-8">
         <div className="text-center space-y-2">
           <p className="text-[#02364B] font-semibold text-2xl md:text-3xl">
             Next of Kin
           </p>
           <p className="text-gray-600">
-            Provide your next of kin information to complete the KYC process.
+            Provide your next of kin information to complete the KYC process. 
           </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 pt-2">
+            <div className="p-4 bg-[#f3f3f3] shadow-sm rounded-sm border border-primary">
+              <p className='text-sm text-gray-500 mb-1'>Person 1</p>
+              <p className='text-[15px] font-medium text-primary'></p>
+            </div>
+            <div className="p-4 bg-[#f3f3f3] shadow-sm rounded-sm">
+              <p className='text-sm text-gray-500 mb-1'>Person 2</p>
+              <p className='text-[15px] font-medium text-primary'></p>
+            </div>
+          </div>
         </div>
 
         <form
