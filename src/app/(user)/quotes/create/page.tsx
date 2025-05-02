@@ -1,22 +1,29 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import { GenericButton } from '@/components/general/Button';
 import { useTransition, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Link from 'next/link';
 import validator from 'validator';
-import { SignupData } from '@/types';
+import { CreateQuoteForm } from '@/types';
 import { Loader2 } from 'lucide-react';
 import Select from '@/components/general/Select';
 
 export default function SignupPage() {
   const [isPending, startTransition] = useTransition();
-  const [signUpData, setSignUpData] = useState<SignupData>({
+  const [quoteData, setQuoteData] = useState<CreateQuoteForm>({
+    product: '',
     firstName: '',
     lastName: '',
+    dateOfBirth: '',
+    gender: '',
     email: '',
-    phoneNo: '',
-    address: '',
+    phoneNumber: '',
+    premiumValue: 0,
+    policyTerm: '',
+    paymentTerm: '',
+    // sumAssured: 0,
   });
 
   const {
@@ -24,19 +31,21 @@ export default function SignupPage() {
     handleSubmit,
     formState: { errors },
   } = useForm({
-    defaultValues: signUpData,
+    defaultValues: quoteData,
   });
 
   const onSubmit = handleSubmit(async (data) => {
     startTransition(async () => {
-      setSignUpData(data);
+      setQuoteData(data);
       // do something
     });
   });
 
+  const router = useRouter();
+
   return (
-    <div className="flex justify-center items-center w-full h-full px-6">
-      <div className="flex flex-col items-center gap-9">
+    <div className="flex justify-center items-center w-full h-full my-20 md:my-0">
+      <div className="flex flex-col items-center justify-center gap-9 w-full">
         <div className="text-center space-y-2">
           <p className="text-[#02364B] font-semibold text-2xl md:text-3xl">
             Create Quote
@@ -45,7 +54,7 @@ export default function SignupPage() {
 
         <form
           onSubmit={onSubmit}
-          className="grid grid-cols-1 gap-8 place-content-center w-full md:w-[550px]"
+          className="grid grid-cols-1 gap-8 place-content-center w-full md:w-[600px]"
         >
           <div className="flex flex-col items-center gap-[18px] w-full text-[15px]">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-4 md:gap-y-[18px] w-full">
@@ -112,7 +121,7 @@ export default function SignupPage() {
                 )}
               </div>
               <div className="flex flex-col gap-1 w-full relative pt-2">
-                <p className="absolute text-xs text-gray-500 -top-1.5 left-2.5">
+                <p className="absolute text-xs text-gray-500 -top-1 left-2.5">
                   Date of Birth
                 </p>
                 <input
@@ -123,6 +132,7 @@ export default function SignupPage() {
                 />
               </div>
               <Select
+                className="mt-0.5"
                 options={[
                   { label: 'Male', value: 'male' },
                   { label: 'Female', value: 'female' },
@@ -139,16 +149,16 @@ export default function SignupPage() {
                   outline-0 focus:border-b-2 focus:border-b-blue-900 ${
                     errors.email ? 'border-red-300' : ''
                   }`}
-                  {...register('phoneNo', {
+                  {...register('phoneNumber', {
                     required: true,
                     validate: (value) => validator.isMobilePhone(value),
                   })}
                 />
-                {errors?.phoneNo && (
+                {errors?.phoneNumber && (
                   <p className="text-red-400 text-sm">
-                    {errors.phoneNo?.type === 'required' &&
+                    {errors.phoneNumber?.type === 'required' &&
                       'Phone Number is required'}
-                    {errors.phoneNo?.type === 'validate' &&
+                    {errors.phoneNumber?.type === 'validate' &&
                       'Phone Number must be valid'}
                   </p>
                 )}
@@ -208,20 +218,21 @@ export default function SignupPage() {
               />
             </div>
 
-            <Link href={''} className="inline-block w-full">
-              <GenericButton
-                type="submit"
-                className="bg-[#02364B] mt-6 !w-full cursor-pointer"
-              >
-                {isPending ? (
-                  <div className="flex justify-center items-center">
-                    <Loader2 className="h-6 w-6" />
-                  </div>
-                ) : (
-                  'Generate Quote'
-                )}
-              </GenericButton>
-            </Link>
+            <GenericButton
+              type="submit"
+              className="bg-[#02364B] mt-6 !w-full cursor-pointer"
+              onClick={() => {
+                router.push('/quotes/create/quote-generated');
+              }}
+            >
+              {isPending ? (
+                <div className="flex justify-center items-center">
+                  <Loader2 className="h-6 w-6" />
+                </div>
+              ) : (
+                'Generate Quote'
+              )}
+            </GenericButton>
           </div>
         </form>
       </div>

@@ -39,7 +39,7 @@ export default function SignupPage() {
 
   return (
     <div className="flex justify-center items-center w-full h-full px-6 my-20 md:my-0">
-      <div className="flex flex-col items-center gap-9">
+      <div className="flex flex-col items-center gap-9 w-full">
         <div className="text-center space-y-2">
           <p className="text-[#02364B] font-semibold text-2xl md:text-3xl">
             Sign Up

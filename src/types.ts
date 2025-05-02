@@ -43,19 +43,18 @@ export interface RecentCustomers {
   signUpTime: string;
 }
 
-export type fetchQuotesForm = {
+export type CreateQuoteForm = {
+  firstName: string;
+  lastName: string;
+  gender: string;
   email: string;
   phoneNumber: string;
   dateOfBirth: string;
-  productCode: string;
-  productOption: string;
+  product: string;         
   policyTerm: string;
   paymentTerm: string;
-  sumAssured: number;
-  premiumValue: string;
-  agentPhoneNo?: string;
-  agentCode?: string;
-  agentName?: string;
+  // sumAssured: number;
+  premiumValue: number;
 };
 
 export type sendOTPForm = {
