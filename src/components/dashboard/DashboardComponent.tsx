@@ -8,6 +8,7 @@ import {
 } from '@heroicons/react/24/solid';
 import BarChartComponent from './BarChart';
 import PieChartComponent from './PieChart';
+import RecentCustomers from './RecentCustomers';
 
 interface StatCardProps {
   icon: React.ReactNode;
@@ -76,7 +77,9 @@ const DashboardComponent = () => {
           <BarChartComponent />
         </div>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-10 bg-white shadow-sm rounded px-6 pt-5 pb-4 mt-4 hover:shadow-md transition-all duration-500"></div>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-10 bg-white shadow-sm rounded px-6 pt-5 pb-4 mt-4 hover:shadow-md transition-all duration-500">
+        <RecentCustomers />
+      </div>
     </>
   );
 };
